@@ -19,11 +19,11 @@ const tableBody = document.querySelector("#repertorioTable tbody");
 
 // Lista de usuarios autorizados
 const authorizedUsers = [
-  { email: atob("ZGVsbWVyQHRlcnJhbmRpbmEuY29t"), password: atob("c2h1MTIz") },
-  { email: atob("am9uYXRoYW5AdGVycmFuZGluYS5jb20="), password: atob("c2h1MTIz") },
-  { email: atob("YnVsYWNpb0B0ZXJyYW5kaW5hLmNvbQ=="), password: atob("c2h1MTIz") },
-  { email: atob("bWFydmluQHRlcnJhbmRpbmEuY29t"), password: atob("c2h1MTIz") },
-  { email: atob("cm9kcmlnb0B0ZXJyYW5kaW5hLmNvbQ=="), password: atob("c2h1MTIz") }
+  { email: "delmer@terrandina.com", password: "shu123" },
+  { email: "jonathan@terrandina.com", password: "shu123" },
+  { email: "bulacio@terrandina.com", password: "shu123" },
+  { email: "marvin@terrandina.com", password: "shu123" },
+  { email: "rodrigo@terrandina.com", password: "shu123" }
 ];
 
 // Función para cargar el repertorio desde localStorage
@@ -106,17 +106,14 @@ repertorioForm.addEventListener("submit", addItem);
 // Cargar el repertorio al iniciar
 loadRepertorio();
 
+// Autenticación simple
 loginForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  console.log(email, password);
 
-  // Verificar si las credenciales ingresadas coinciden con algún usuario autorizado
-  const user = authorizedUsers.find(user => {
-    // Comparar las credenciales directamente sin decodificarlas
-    return user.email === email && user.password === password;
-  });
+  // Verificar si las credenciales coinciden con algún usuario autorizado
+  const user = authorizedUsers.find(user => user.email === email && user.password === password);
 
   if (user) {
     alert("Sesión iniciada correctamente");
@@ -128,7 +125,23 @@ loginForm.addEventListener("submit", function (event) {
   }
 });
 
+const JavaScriptObfuscator = require("javascript-obfuscator");
+const fs = require('fs');
 
+// Lee el archivo JavaScript original
+const code = fs.readFileSync('src/main.js', 'utf8');
 
+// Ofusca el código
+const obfuscatedCode = JavaScriptObfuscator.obfuscate(code, {
+  compact: true,
+  controlFlowFlattening: true, // Mejora la ofuscación
+  stringArray: true,  // Ofusca cadenas
+  stringArrayEncoding: ['base64'], // Codificación en Base64 para cadenas
+}).getObfuscatedCode();
+
+// Escribe el código ofuscado en un nuevo archivo
+fs.writeFileSync('src/main.obfuscated.js', obfuscatedCode);
+
+console.log('El código ha sido ofuscado correctamente.');
 
 
