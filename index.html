@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crud Repertorio</title>
+  <link rel="stylesheet" href="src/style.css">
+</head>
+
+<body>
+  <div id="loginPopup" class="popup">
+    <div class="popup-content">
+      <h2>Iniciar Sesión</h1>
+        <form id="loginForm">
+          <input type="email" id="email" placeholder="Email" required>
+          <input type="password" id="password" placeholder="Contraseña" required>
+          <button type="submit">Iniciar Sesión</button>
+        </form>
+    </div>
+  </div>
+
+  <!-- Popup de Edición -->
+  <div id="editPopup" class="popup" style="display: none;">
+  <div class="popup-content">
+    <h2>Editar Repertorio</h2>
+    <form id="editForm">
+      <input type="text" id="editTitulo" placeholder="Título" required>
+      <input type="text" id="editArtista" placeholder="Artista" required>
+      <button type="submit">Guardar Cambios</button>
+      <button type="button" id="cancelEdit">Cancelar</button>
+    </form>
+  </div>
+</div>
+
+  <div id="app" style="display: none;">
+    <h1>Gestión de Repertorio</h1>
+    <form id="repertorioForm" class="card">
+      <input type="text" id="titulo" placeholder="Título" required>
+      <input type="text" id="artista" placeholder="Artista" required>
+      <button type="submit">Añadir</button>
+    </form>
+    <table id="repertorioTable" class="card">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Artista</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+
+</body>
+
+</html>
