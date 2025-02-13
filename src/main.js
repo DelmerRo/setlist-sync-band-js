@@ -83,7 +83,7 @@ function generateEventRow(event, index) {
   return `<tr>
     <td>${event.nombre}</td>
     <td>${event.fecha}</td>
-    <td>${event.temas.join(", ")}</td> 
+    <td>${event.temas}</td> 
     <td>
       <button class="btn btn-success btn-sm" id="viewBtn-${index}">Ver</button>
       <button class="btn btn-warning btn-sm" onclick="editEvent(${index})">Editar</button>
@@ -96,6 +96,11 @@ function generateEventRow(event, index) {
 function saveRepertoire(repertorio) {
   localStorage.setItem("repertorio", JSON.stringify(repertorio));
   loadRepertoire();
+}
+
+function saveEvent(events) {
+  localStorage.setItem("events", JSON.stringify(events));
+  loadEvents();
 }
 
 // Función para manejar el login
@@ -135,6 +140,26 @@ function addNewSong(event) {
   bootstrap.Modal.getInstance(document.getElementById('addSongModal')).hide();
 }
 
+// Función para agregar un nuevo evento
+function addNewEvent(event) {
+  event.preventDefault();
+
+  const nuevoEvento = {
+    nombre: document.getElementById("eventName").value,
+    fecha: document.getElementById("eventDate").value,
+    temas: JSON.parse(localStorage.getItem("selectedSongs")) || []
+  };
+
+  const events = JSON.parse(localStorage.getItem("events")) || [];
+  events.push(nuevoEvento);
+  saveEvent(events);
+
+  document.getElementById("eventForm").reset();
+  bootstrap.Modal.getInstance(document.getElementById('addEventModal')).hide();
+}
+
+
+
 window.editSong = function(index) {
   const repertorio = JSON.parse(localStorage.getItem("repertorio"));
   const cancion = repertorio[index];
@@ -148,36 +173,6 @@ window.editSong = function(index) {
   editId = index;
   editSongModal.show();
 };
-
-// Función para agregar un nuevo evento
-function addNewEvent(event) {
-  event.preventDefault();
-
-  const eventName = document.getElementById("eventName").value;
-  const eventDate = document.getElementById("eventDate").value;
-  const selectedSongs = JSON.parse(localStorage.getItem("selectedSongs")) || [];
-
-  const newEvent = {
-    nombre: eventName,
-    fecha: eventDate,
-    temas: selectedSongs
-  };
-
-  const events = JSON.parse(localStorage.getItem("events")) || [];
-  events.push(newEvent);
-
-  localStorage.setItem("events", JSON.stringify(events));
-
-  alert("Evento agregado correctamente");
-
-  // Limpiar el formulario y actualizar la vista
-  resetForm("eventForm");
-  loadEvents(); // Recargar los eventos
-
-  // Cerrar el modal
-  bootstrap.Modal.getInstance(document.getElementById('addEventModal')).hide();
-}
-
 
 // Guardar la edición de la canción
 function saveEditedSong(event) {
@@ -228,30 +223,36 @@ function highlightChordsInText(text) {
 // Cargar las canciones disponibles para selección
 function loadAvailableSongs() {
   const repertorio = JSON.parse(localStorage.getItem("repertorio")) || [];
-  const availableSongs = repertorio.map(song => song.titulo);
+  availableSongsContainer.innerHTML = ""; // Limpiar antes de agregar nuevos elementos
 
-  availableSongs.forEach(songTitle => {
-    const songCheckbox = document.createElement('input');
-    songCheckbox.type = 'checkbox';
-    songCheckbox.value = songTitle;
-    songCheckbox.id = `song-${songTitle}`;
-    songCheckbox.className = 'song-checkbox';
+  if (repertorio.length === 0) {
+    availableSongsContainer.innerHTML = "<p>No hay canciones disponibles.</p>";
+    return;
+  }
 
-    const label = document.createElement('label');
-    label.setAttribute('for', songCheckbox.id);
-    label.textContent = songTitle;
+  repertorio.forEach((song, index) => {
+  const songCheckbox = document.createElement("input");
+  songCheckbox.type = "checkbox";
+  songCheckbox.value = song.titulo;
+  songCheckbox.id = `song-${index}`;
 
-    const container = document.createElement('div');
-    container.appendChild(songCheckbox);
-    container.appendChild(label);
-
-    availableSongsContainer.appendChild(container);
-
-    songCheckbox.addEventListener('change', function () {
-      updateSelectedSongs(songTitle, songCheckbox.checked);
-    });
+  songCheckbox.addEventListener("change", (e) => {
+    updateSelectedSongs(song.titulo, e.target.checked);
   });
+
+  const label = document.createElement("label");
+  label.htmlFor = `song-${index}`;
+  label.textContent = song.titulo;
+
+  const div = document.createElement("div");
+  div.appendChild(songCheckbox);
+  div.appendChild(label);
+
+  availableSongsContainer.appendChild(div);
+});
+
 }
+
 
 // Actualizar las canciones seleccionadas
 function updateSelectedSongs(songTitle, isSelected) {
@@ -319,6 +320,8 @@ function init() {
   loadEvents()
   loadAvailableSongs();
   updateSelectedSongsDisplay();
+  console.log(localStorage.getItem('nombre_de_tu_clave'));
+
 }
 
 // Asignar evento al formulario de login
@@ -332,6 +335,12 @@ eventForm.addEventListener("submit", addNewEvent);
 
 // Asignar evento al formulario de edición de canción
 editRepertorioForm.addEventListener("submit", saveEditedSong);
+
+//Carga los temas que se podrian tocar en el evento
+document.addEventListener("DOMContentLoaded", function() {
+  loadAvailableSongs();
+});
+
 
 // Iniciar la aplicación
 init();
