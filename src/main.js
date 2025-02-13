@@ -85,7 +85,7 @@ function generateEventRow(event, index) {
     <td>${event.fecha}</td>
     <td>${event.temas}</td> 
     <td>
-      <button class="btn btn-success btn-sm" id="viewBtn-${index}">Ver</button>
+      <button class="btn btn-success btn-sm" id="viewEventBtn-${index}">Ver</button>
       <button class="btn btn-warning btn-sm" onclick="editEvent(${index})">Editar</button>
       <button class="btn btn-danger btn-sm" onclick="deleteEvent(${index})">Eliminar</button>
     </td>
@@ -122,8 +122,8 @@ function handleLogin(event) {
 }
 
 // Función para agregar una nueva canción al repertorio
-function addNewSong(event) {
-  event.preventDefault();
+function addNewSong(repo) {
+  repo.preventDefault();
   const nuevaCancion = {
     titulo: document.getElementById("titulo").value,
     artista: document.getElementById("artista").value,
@@ -309,10 +309,6 @@ function clearCheckboxes() {
     checkbox.checked = false;
   });
 }
-
-// Asignar los eventos de modal
-addEventModal.addEventListener('show.bs.modal', showAddEventModal);
-addEventModal.addEventListener('hidden.bs.modal', clearCheckboxes);
 
 // Inicializar la aplicación
 function init() {
