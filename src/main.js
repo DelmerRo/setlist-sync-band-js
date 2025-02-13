@@ -12,6 +12,37 @@ const tableBody = document.querySelector("#repertorioTable tbody");
 const editSongModal = new bootstrap.Modal(document.getElementById('editSongModal'));
 let editId = null;
 
+// Lista de usuarios autorizados
+const authorizedUsers = [
+  { email: atob("ZGVsbWVyQHRlcnJhbmRpbmEuY29t"), password: atob("c2h1MTIz") },
+  { email: atob("am9uYXRoYW5AdGVycmFuZGluYS5jb20="), password: atob("c2h1MTIz") },
+  { email: atob("YnVsYWNpb0B0ZXJyYW5kaW5hLmNvbQ=="), password: atob("c2h1MTIz") },
+  { email: atob("bWFydmluQHRlcnJhbmRpbmEuY29t"), password: atob("c2h1MTIz") },
+  { email: atob("cm9kcmlnb0B0ZXJyYW5kaW5hLmNvbQ=="), password: atob("c2h1MTIz") }
+];
+
+loginForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  console.log(email, password);
+
+  // Verificar si las credenciales ingresadas coinciden con algún usuario autorizado
+  const user = authorizedUsers.find(user => {
+    // Comparar las credenciales directamente sin decodificarlas
+    return user.email === email && user.password === password;
+  });
+
+  if (user) {
+    alert("Sesión iniciada correctamente");
+    loginPopup.style.display = "none";  // Ocultar el popup de login
+    app.style.display = "block";  // Mostrar la app principal
+    loadRepertorio();  // Cargar los datos del repertorio
+  } else {
+    alert("Credenciales incorrectas");
+  }
+});
+
 // Cargar repertorio desde localStorage
 function loadRepertoire() {
   const repertorio = JSON.parse(localStorage.getItem("repertorio")) || [];
@@ -133,15 +164,6 @@ function highlightChordsInText(text) {
 
   return text;
 }
-
-
-
-
-
-
-
-
-
 
 // Inicializar
 loadRepertoire();

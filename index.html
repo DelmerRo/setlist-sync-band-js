@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,192 +9,210 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
-  <!-- <div id="loginPopup" class="popup">
-    <div class="popup-content">
-      <h2>Iniciar Sesión</h1>
-        <form id="loginForm">
-          <input type="email" id="email" placeholder="Email" required>
-          <input type="password" id="password" placeholder="Contraseña" required>
-          <button type="submit">Iniciar Sesión</button>
-        </form>
+<body class="d-flex flex-column min-vh-100">
+  <!-- Header -->
+  <header class="bg-dark text-white py-3 w-100">
+    <div class="container">
+      <h1 class="mb-0">Gestión de Repertorio</h1>
+      <nav>
+        <ul class="nav">
+          <li class="nav-item"><a href="/index.html" class="nav-link text-white">Inicio</a></li>
+          <li class="nav-item"><a href="/eventos.html" class="nav-link text-white">Contacto</a></li>
+        </ul>
+      </nav>
     </div>
-  </div> -->
+  </header>
+
+  <div id="loginPopup" class="popup">
+    <div class="popup-content">
+      <h2>Iniciar Sesión</h2>
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+    </div>
+  </div>
 
   <!-- Popup de Edición -->
-    <div id="app" class="container py-4">
-      <h1 class="text-center mb-4">Gestión de Repertorio</h1>
-      
-      <div class="d-flex justify-content-end mb-3">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSongModal">+ Agregar Canción</button>
-      </div>
-      
-      <div class="card p-3 shadow">
-        <h4 class="mb-3">Listado de Repertorio</h4>
-        <div class="table-responsive">
-          <table class="table table-striped text-center" id="repertorioTable">
-            <thead class="table-dark">
-              <tr>
-                <th>Título</th>
-                <th>Artista</th>
-                <th>Género</th>
-                <th>Tonalidad</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Canciones dinámicas -->
-            </tbody>
-          </table>
-        </div>
-      </div>
+  <div id="app" class="container py-4">
+    <h1 class="text-center mb-4">Gestión de Repertorio</h1>
+
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSongModal">+ Agregar Canción</button>
     </div>
-  
-    <!-- Modal para agregar canción -->
-    <div class="modal fade" id="addSongModal" tabindex="-1" aria-labelledby="addSongModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addSongModalLabel">Agregar Nueva Canción</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="repertorioForm">
-              <div class="mb-2">
-                <input type="text" id="titulo" class="form-control" placeholder="Título" required>
-              </div>
-              <div class="mb-2">
-                <input type="text" id="artista" class="form-control" placeholder="Artista" required>
-              </div>
-              <div class="mb-2">
-                <input type="text" id="genero" class="form-control" placeholder="Género" required>
-              </div>
-              <div class="mb-2">
-                <select id="tonalidad" class="form-select" required>
-                  <option value="">Selecciona una tonalidad</option>
-                  <option value="C">Do</option>
-                  <option value="Cm">Dom</option>
-                  <option value="C#">Do#</option>
-                  <option value="C#m">Dom#m</option>
-                  <option value="D">Re</option>
-                  <option value="Dm">Rem</option>
-                  <option value="D#">Re#</option>
-                  <option value="D#m">Rem#m</option>
-                  <option value="E">Mi</option>
-                  <option value="Em">Mim</option>
-                  <option value="F">Fa</option>
-                  <option value="Fm">Fam</option>
-                  <option value="F#">Fa#</option>
-                  <option value="F#m">Fam#m</option>
-                  <option value="G">Sol</option>
-                  <option value="Gm">Solm</option>
-                  <option value="G#">Sol#</option>
-                  <option value="G#m">Sol#m</option>
-                  <option value="A">La</option>
-                  <option value="Am">Lam</option>
-                  <option value="A#">La#</option>
-                  <option value="A#m">Lam#m</option>
-                  <option value="B">Si</option>
-                  <option value="Bm">Sim</option>
-                  <option value="B#">Si#</option>
-                  <option value="B#m">Sim#m</option>
-                </select>
-              </div>
-              <div class="mb-2 flex-grow-1 d-flex flex-column">
-                <textarea id="letrasAcordes" class="form-control flex-grow-1" placeholder="Letras y Acordes" rows="25" required></textarea>
-              </div>
-              <div class="text-center mt-2">
-                <button type="submit" class="btn btn-primary">Añadir Canción</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <!-- Modal para editar canción -->
-    <div class="modal fade" id="editSongModal" tabindex="-1" aria-labelledby="editSongModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editSongModalLabel">Editar Canción</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="editRepertorioForm">
-              <input type="hidden" id="editId">
-              <div class="mb-2">
-                <input type="text" id="editTitulo" class="form-control" required>
-              </div>
-              <div class="mb-2">
-                <input type="text" id="editArtista" class="form-control" required>
-              </div>
-              <div class="mb-2">
-                <input type="text" id="editGenero" class="form-control" required>
-              </div>
-              <div class="mb-2">
-                <select id="editTonalidad" class="form-select" required>
-                  <option value="C">Do</option>
-    <option value="Cm">Dom</option>
-    <option value="C#">Do#</option>
-    <option value="C#m">Dom#m</option>
-    <option value="D">Re</option>
-    <option value="Dm">Rem</option>
-    <option value="D#">Re#</option>
-    <option value="D#m">Rem#m</option>
-    <option value="E">Mi</option>
-    <option value="Em">Mim</option>
-    <option value="F">Fa</option>
-    <option value="Fm">Fam</option>
-    <option value="F#">Fa#</option>
-    <option value="F#m">Fam#m</option>
-    <option value="G">Sol</option>
-    <option value="Gm">Solm</option>
-    <option value="G#">Sol#</option>
-    <option value="G#m">Sol#m</option>
-    <option value="A">La</option>
-    <option value="Am">Lam</option>
-    <option value="A#">La#</option>
-    <option value="A#m">Lam#m</option>
-    <option value="B">Si</option>
-    <option value="Bm">Sim</option>
-    <option value="B#">Si#</option>
-    <option value="B#m">Sim#m</option>
-                </select>
-              </div>
-              <div class="mb-2 flex-grow-1 d-flex flex-column">
-                <textarea id="editLetrasAcordes" class="form-control flex-grow-1" rows="25" required></textarea>
-              </div>
-              <div class="text-center mt-2">
-                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-<!-- Modal para ver acordes -->
-<div class="modal fade" id="chordsModal" tabindex="-1" aria-labelledby="chordsModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="chordsModalLabel">Acordes de la Canción</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div id="chordsContent"></div> <!-- Aquí se insertarán los acordes -->
+
+    <div class="card p-3 shadow">
+      <h4 class="mb-3">Listado de Repertorio</h4>
+      <div class="table-responsive">
+        <table class="table table-striped text-center" id="repertorioTable">
+          <thead class="table-dark">
+            <tr>
+              <th>Título</th>
+              <th>Artista</th>
+              <th>Género</th>
+              <th>Tonalidad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Canciones dinámicas -->
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-</div>
 
+  <!-- Modal para agregar canción -->
+  <div class="modal fade" id="addSongModal" tabindex="-1" aria-labelledby="addSongModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addSongModalLabel">Agregar Nueva Canción</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="repertorioForm">
+            <div class="mb-2">
+              <input type="text" id="titulo" class="form-control" placeholder="Título" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" id="artista" class="form-control" placeholder="Artista" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" id="genero" class="form-control" placeholder="Género" required>
+            </div>
+            <div class="mb-2">
+              <select id="tonalidad" class="form-select" required>
+                <option value="">Selecciona una tonalidad</option>
+                <option value="C">Do</option>
+                <option value="Cm">Dom</option>
+                <option value="C#">Do#</option>
+                <option value="C#m">Dom#m</option>
+                <option value="D">Re</option>
+                <option value="Dm">Rem</option>
+                <option value="D#">Re#</option>
+                <option value="D#m">Re#m</option>
+                <option value="E">Mi</option>
+                <option value="Em">Mim</option>
+                <option value="F">Fa</option>
+                <option value="Fm">Fam</option>
+                <option value="F#">Fa#</option>
+                <option value="F#m">Fa#m</option>
+                <option value="G">Sol</option>
+                <option value="Gm">Solm</option>
+                <option value="G#">Sol#</option>
+                <option value="G#m">Sol#m</option>
+                <option value="A">La</option>
+                <option value="Am">Lam</option>
+                <option value="A#">La#</option>
+                <option value="A#m">La#m</option>
+                <option value="B">Si</option>
+                <option value="Bm">Sim</option>
+                <option value="B#">Si#</option>
+                <option value="B#m">Si#m</option>
+              </select>
+            </div>
+            <div class="mb-2 flex-grow-1 d-flex flex-column">
+              <textarea id="letrasAcordes" class="form-control flex-grow-1" placeholder="Letras y Acordes" rows="25"
+                required></textarea>
+            </div>
+            <div class="text-center mt-2">
+              <button type="submit" class="btn btn-primary">Añadir Canción</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Modal para editar canción -->
+  <div class="modal fade" id="editSongModal" tabindex="-1" aria-labelledby="editSongModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editSongModalLabel">Editar Canción</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editRepertorioForm">
+            <input type="hidden" id="editId">
+            <div class="mb-2">
+              <input type="text" id="editTitulo" class="form-control" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" id="editArtista" class="form-control" required>
+            </div>
+            <div class="mb-2">
+              <input type="text" id="editGenero" class="form-control" required>
+            </div>
+            <div class="mb-2">
+              <select id="editTonalidad" class="form-select" required>
+                <option value="C">Do</option>
+                <option value="Cm">Dom</option>
+                <option value="C#">Do#</option>
+                <option value="C#m">Do#m</option>
+                <option value="D">Re</option>
+                <option value="Dm">Rem</option>
+                <option value="D#">Re#</option>
+                <option value="D#m">Re#m</option>
+                <option value="E">Mi</option>
+                <option value="Em">Mim</option>
+                <option value="F">Fa</option>
+                <option value="Fm">Fam</option>
+                <option value="F#">Fa#</option>
+                <option value="F#m">Fa#m</option>
+                <option value="G">Sol</option>
+                <option value="Gm">Solm</option>
+                <option value="G#">Sol#</option>
+                <option value="G#m">Sol#m</option>
+                <option value="A">La</option>
+                <option value="Am">Lam</option>
+                <option value="A#">La#</option>
+                <option value="A#m">La#m</option>
+                <option value="B">Si</option>
+                <option value="Bm">Sim</option>
+                <option value="B#">Si#</option>
+                <option value="B#m">Si#m</option>
+              </select>
+            </div>
+            <div class="mb-2 flex-grow-1 d-flex flex-column">
+              <textarea id="editLetrasAcordes" class="form-control flex-grow-1" rows="25" required></textarea>
+            </div>
+            <div class="text-center mt-2">
+              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Modal para ver acordes -->
+  <div class="modal fade" id="chordsModal" tabindex="-1" aria-labelledby="chordsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="chordsModalLabel">Acordes de la Canción</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="chordsContent"></div> <!-- Aquí se insertarán los acordes -->
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      crossorigin="anonymous"></script>
-    <script type="module" src="src/main.js"></script>
-  </body>
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-3 w-100">
+    <div class="container text-center">
+      <p>&copy; 2025 Gestión de Repertorio - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+  <script type="module" src="src/main.js"></script>
+</body>
 
 </html>
