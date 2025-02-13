@@ -17,7 +17,7 @@
       <nav>
         <ul class="nav">
           <li class="nav-item"><a href="/index.html" class="nav-link text-white">Inicio</a></li>
-          <li class="nav-item"><a href="/eventos.html" class="nav-link text-white">Contacto</a></li>
+          <li class="nav-item"><a href="/event.html" class="nav-link text-white">Eventos</a></li>
         </ul>
       </nav>
     </div>
@@ -37,6 +37,30 @@
   <!-- Popup de Edición -->
   <div id="app" class="container py-4">
     <h1 class="text-center mb-4">Gestión de Repertorio</h1>
+
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">+ Agregar Evento</button>
+    </div>
+
+    <div class="card p-3 shadow">
+      <h4 class="mb-3">Listado de Eventos</h4>
+      <div class="table-responsive">
+        <table class="table table-striped text-center" id="eventTable">
+          <thead class="table-dark">
+            <tr>
+              <th>Nombre</th>
+              <th>Fecha</th>
+              <th>Temas</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Canciones dinámicas -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
     <div class="d-flex justify-content-end mb-3">
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSongModal">+ Agregar Canción</button>
@@ -202,6 +226,46 @@
       </div>
     </div>
   </div>
+
+<!-- Modal para agregar evento -->
+<div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addEventModalLabel">Agregar Evento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="eventForm">
+          <div class="mb-3">
+            <label for="eventName" class="form-label">Nombre del Evento</label>
+            <input type="text" class="form-control" id="eventName" required>
+          </div>
+          <div class="mb-3">
+            <label for="eventDate" class="form-label">Fecha del Evento</label>
+            <input type="date" class="form-control" id="eventDate" required>
+          </div>
+          <div class="mb-3">
+            <label for="availableSongs" class="form-label">Selecciona los temas</label>
+            <div class="d-flex">
+              <!-- Lista de temas disponibles con checkboxes -->
+              <div class="form-control" style="min-height: 200px; max-width: 250px;" id="availableSongs">
+                <!-- Los checkboxes de los temas disponibles serán generados dinámicamente -->
+              </div>
+              <!-- Lista de temas seleccionados -->
+              <div class="form-control" style="min-height: 200px; max-width: 250px;" id="selectedSongs">
+                <!-- Aquí se mostrarán los temas seleccionados -->
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-2">
+            <button type="submit" class="btn btn-primary">Guardar Evento</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- Footer -->
   <footer class="bg-dark text-white py-3 w-100">
