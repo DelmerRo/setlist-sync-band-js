@@ -16,6 +16,7 @@ let editId = null;
 function loadRepertoire() {
   const repertorio = JSON.parse(localStorage.getItem("repertorio")) || [];
   tableBody.innerHTML = "";
+
   repertorio.forEach((cancion, index) => {
     const row = `<tr>
       <td>${cancion.titulo}</td>
@@ -23,12 +24,19 @@ function loadRepertoire() {
       <td>${cancion.genero}</td>
       <td>${cancion.tonalidad}</td>
       <td>
-      <button class="btn btn-success btn-sm" onclick="viewSong(${index})">Ver</button>
+        <button class="btn btn-success btn-sm" id="viewBtn-${index}">Ver</button>
         <button class="btn btn-warning btn-sm" onclick="editSong(${index})">Editar</button>
         <button class="btn btn-danger btn-sm" onclick="deleteSong(${index})">Eliminar</button>
       </td>
     </tr>`;
     tableBody.innerHTML += row;
+  });
+
+  // Asignar los eventos después de que toda la tabla haya sido cargada
+  repertorio.forEach((cancion, index) => {
+    document.getElementById(`viewBtn-${index}`).addEventListener("click", function() {
+      viewSong(index);
+    });
   });
 }
 
