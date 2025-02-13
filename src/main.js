@@ -10,11 +10,17 @@ const editPopup = document.getElementById('editPopup');
 const editForm = document.getElementById('editForm');
 const editTituloInput = document.getElementById('editTitulo');
 const editArtistaInput = document.getElementById('editArtista');
+const editGeneroInput = document.getElementById('editGenero');
+const editTonalidadInput = document.getElementById('editTonalidad');
+const editLinkInput = document.getElementById('editLink');
 
 // Repertorio
 const repertorioForm = document.getElementById("repertorioForm");
 const tituloInput = document.getElementById("titulo");
 const artistaInput = document.getElementById("artista");
+const generoInput = document.getElementById("genero");
+const tonalidadInput = document.getElementById("tonalidad");
+const linkInput = document.getElementById("link");
 const tableBody = document.querySelector("#repertorioTable tbody");
 
 // Lista de usuarios autorizados
@@ -35,6 +41,9 @@ function loadRepertorio() {
     row.innerHTML = `
       <td>${item.titulo}</td>
       <td>${item.artista}</td>
+      <td>${item.genero}</td>
+      <td>${item.tonalidad}</td>
+      <td><a href="${item.link}" target="_blank">Ver/Editar</a></td>
       <td>
         <button onclick="editItem(${index})">Editar</button>
         <button onclick="deleteItem(${index})">Eliminar</button>
@@ -55,6 +64,9 @@ function addItem(event) {
   repertorio.push({
     titulo: tituloInput.value,
     artista: artistaInput.value,
+    genero: generoInput.value,
+    tonalidad: tonalidadInput.value,
+    link: linkInput.value,
   });
   saveRepertorio(repertorio);
   loadRepertorio();  // Recargar la tabla después de agregar
@@ -69,6 +81,9 @@ window.editItem = function (index) {
   // Rellenar el formulario de edición con los datos del ítem
   editTituloInput.value = item.titulo;
   editArtistaInput.value = item.artista;
+  editGeneroInput.value = item.genero;
+  editTonalidadInput.value = item.tonalidad;
+  editLinkInput.value = item.link;
 
   // Mostrar el popup de edición
   editPopup.style.display = "flex";
@@ -78,6 +93,9 @@ window.editItem = function (index) {
     event.preventDefault();
     item.titulo = editTituloInput.value;
     item.artista = editArtistaInput.value;
+    item.genero = editGeneroInput.value;
+    item.tonalidad = editTonalidadInput.value;
+    item.link = editLinkInput.value;
 
     // Actualizar el repertorio y cerrar el popup
     repertorio.splice(index, 1, item);
