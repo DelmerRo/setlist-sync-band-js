@@ -102,26 +102,46 @@ window.deleteSong = function (index) {
 function viewSong(index) {
   const repertorio = JSON.parse(localStorage.getItem("repertorio"));
   const cancion = repertorio[index];
-
-  // Accedemos al contenido de los acordes de la canción
   const letrasAcordes = cancion.letrasAcordes;
 
-  // Resaltar los acordes dentro del texto
+  // Resaltar los acordes dentro del texto.
   const highlightedChords = highlightChordsInText(letrasAcordes);
 
-  // Mostrar los acordes en el modal
+  // Insertar el texto resaltado en el modal.
   document.getElementById("chordsContent").innerHTML = highlightedChords;
 
-  // Mostrar el modal con los acordes
+  // Mostrar el título de la canción en el modal.
+  document.getElementById("chordsModalLabel").textContent = `${cancion.titulo} - ${cancion.artista}`;
+
+  // Mostrar el modal con los acordes resaltados.
   const chordsModal = new bootstrap.Modal(document.getElementById('chordsModal'));
   chordsModal.show();
 }
 
-// Función para resaltar los acordes en el texto
 function highlightChordsInText(text) {
-  const chordPattern = /\[([A-Za-z#0-9]+)\]/g;  // Detecta los acordes entre corchetes
-  return text.replace(chordPattern, '<span class="chord">$1</span>');
+  // Paso 1: Resaltar los símbolos '@' y '#'
+  text = text.replace(/@/g, '<span class="special-symbol">@</span>');
+  text = text.replace(/#/g, '<span class="special-symbol">#</span>');
+
+  // Paso 2: Resaltar los acordes
+  const chordPattern = /\b([A-G](?:♯|b)?(?:m|maj|min|dim|aug|sus|add)?[0-9]{0,2})\b/g;
+  
+  text = text.replace(chordPattern, (match) => {
+    console.log('Acorde encontrado: ', match);  // Debugging
+    return `<span class="chord">${match}</span>`;
+  });
+
+  return text;
 }
+
+
+
+
+
+
+
+
+
 
 // Inicializar
 loadRepertoire();

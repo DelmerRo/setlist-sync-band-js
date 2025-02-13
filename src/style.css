@@ -164,10 +164,15 @@ button:focus-visible {
 
 /* Estilos CSS para los acordes en el modal */
 .chord {
-  color: #ff6347; /* Color rojo para los acordes */
   font-weight: bold;
+  color: orangered;
+
 }
 
+.special-symbol {
+  color: orangered;  /* Color para los símbolos '@' y '#' */
+  font-weight: bold;
+}
 /* Ajustes para el contenido dentro del modal */
 #chordsContent {
   font-family: Arial, sans-serif;
